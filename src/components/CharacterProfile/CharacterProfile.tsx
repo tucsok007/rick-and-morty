@@ -23,6 +23,7 @@ import api from '@src/services/rest-api';
 import { ICharacter, IEpisode } from '@src/types/data-contracts';
 
 import styles from './CharacterProfile.module.css';
+import { API_ERROR } from '@src/types/constants';
 
 type CharacterProfileParams = {
   id: string;
@@ -79,6 +80,8 @@ export const CharacterProfile = (): JSX.Element => {
       navigate('/');
     }
   };
+
+  if (status === 'error') throw API_ERROR;
 
   if (status === 'pending' || episodes === null) return <Spinner />;
 

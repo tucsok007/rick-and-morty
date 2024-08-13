@@ -23,7 +23,7 @@ import { ProfileImage } from '../ProfileImage/ProfileImage';
 import { PaginationControl } from './PaginationControl/PaginationControl';
 import api from '@src/services/rest-api';
 import { ICharacterEndpointData, ICharacter } from '@src/types/data-contracts';
-import { PAGE_PARAM, SEARCH_PARAM } from '@src/types/constants';
+import { API_ERROR, PAGE_PARAM, SEARCH_PARAM } from '@src/types/constants';
 import { IColumnDefinition, QueryStatus } from '@src/types/types';
 
 type CharactersQueryKey = [string, { page: number; search: string }];
@@ -98,7 +98,8 @@ export const Characters = (): JSX.Element => {
       .then((data) => {
         setData(data);
         setStatus('successful');
-      });
+      })
+      .catch(() => setStatus('error'));
   }, [location.search]);
 
   const setCurrentPage = (newPage: number) => {
@@ -117,6 +118,8 @@ export const Characters = (): JSX.Element => {
   const handleSearch = () => {
     setSearchParams({ [SEARCH_PARAM]: searchValue, [PAGE_PARAM]: '1' });
   };
+
+  if (status === 'error') throw API_ERROR;
 
   if (status === 'loading') return <Spinner />;
 
