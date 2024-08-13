@@ -13,7 +13,17 @@ describe('<Episode />', () => {
     created: '2020-02-02T00:00:01.0001',
   };
 
+  const intersectionObserverMock = () => ({
+    observe: () => null,
+    unobserve: () => null,
+    disconnect: () => null,
+  });
+
   it('should render without crashing', () => {
+    window.IntersectionObserver = jest
+      .fn()
+      .mockImplementation(intersectionObserverMock);
+
     render(<Episode episode={mockEpisode} />);
   });
 });

@@ -1,6 +1,8 @@
 export default {
   preset: 'ts-jest',
-  testEnvironment: 'jest-environment-jsdom',
+  rootDir: '.',
+  roots: ['./src'],
+  testEnvironment: 'jsdom',
   collectCoverage: true,
   collectCoverageFrom: ['src/**/*.{ts, tsx}', '!src/**/*.d.ts'],
   coverageDirectory: 'coverage',
@@ -13,4 +15,9 @@ export default {
     '^@src/(.*)$': ['<rootDir>/src/$1'],
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  globals: {
+    'ts-jest': {
+      tsConfig: 'tsconfig.app.json',
+    },
+  },
 };
