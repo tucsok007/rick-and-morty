@@ -1,0 +1,12 @@
+.back-button {
+  position: fixed !important;
+  top: 0;
+}
+
+@media screen and (min-width: 920px) {
+  .back-button {
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+  }
+}
