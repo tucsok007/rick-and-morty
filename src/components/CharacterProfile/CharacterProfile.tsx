@@ -41,7 +41,7 @@ type EpisodeQueryKey = [string, { idArray: string[] }];
 function getEpisodes(context: QueryFunctionContext) {
   const { idArray } = (context.queryKey as EpisodeQueryKey)[1];
 
-  return api.get<IEpisode[]>(`/episode/${idArray.join(',')}`);
+  return api.get<IEpisode[] | IEpisode>(`/episode/${idArray.join(',')}`);
 }
 
 export const CharacterProfile = (): JSX.Element => {
@@ -69,7 +69,7 @@ export const CharacterProfile = (): JSX.Element => {
         ],
         queryFn: getEpisodes,
       })
-      .then(({ data }) => setEpisodes(data));
+      .then(({ data }) => setEpisodes(Array.isArray(data) ? data : [data]));
   }, [data]);
 
   const handleBack = () => {
